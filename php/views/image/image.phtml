@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="image__article">
+        <h1><?=$displayed['title']?></h1>
+        <p><a href="index.php?action=star&id=<?=$displayed['ID_image']?>"><i class="fa-solid fa-star"></i></a><?=$displayed['number']?></p>
+        <div class="avatar--flex">
+            <?php if($displayed['avatar'] != null) : ?>
+                <img class="avatar" src="img/<?=$displayed['avatar']?>" alt="avatar"/>
+            <?php endif; ?>
+            <div>
+            <p> Posté par <a href="index.php?action=user&id=<?=$displayed['ID_user']?>"><?=$displayed['pseudo']?></a> dans <?=$displayed['categorieName']?></p>
+            <p class="article__date">Le <?=$displayed['date']?></p>
+            </div>
+        </div>
+        <img src="img/<?=$displayed['image']?>" alt="<?=$displayed['details']?>"/>
+        <p><?=$displayed['text']?></p>
+    </div>
+    <div class="commentaire">
+        <ul>
+            <?php foreach($displaycomments as $displaycomment) : ?>
+            <li class="comments__list">
+                <?php if($displaycomment['avatar'] != null) : ?>
+                <img class="avatar__mini" src="img/<?=$displaycomment['avatar']?>" alt="avatar"/>
+                <?php endif; ?>
+                <div>
+                    <p class="comments__pseudo"><?=$displaycomment['pseudo']?></p>
+                    <p class="article__date"><?=$displaycomment['date']?></p>
+                    <p class="comments__text"><?=$displaycomment['comment']?></p>
+                </div>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div>
+        <?php if($this -> isConnect()) : ?>
+        <form action="index.php?action=comment" method="POST">
+            <fieldset class="panel__fieldset"><legend>Poster un commentaire :</legend>
+                <input type="hidden" name="idimage" value="<?=$displayed['ID_image']?>"/>
+                <label class="panel__label" for="pseudo">Votre pseudo :</label>
+                <input class="panel__input" type="text" id="pseudo" name="pseudo" value="<?=$_SESSION['user']['pseudo']?>" readonly required/>
+                <label class="panel__label" for="comment">Votre commentaire :</label>
+                <textarea class="panel__input" id="comment" name="comment" required></textarea>
+                <button type="submit" class="form__button">Envoyer</button>
+            </fieldset>
+        </form>
+        <?php else : ?>
+        <form action="index.php?action=login" method="POST">
+            <fieldset class="panel__fieldset"><legend>Vous devez vous connecter pour poster un commentaire :</legend>
+                <label class="panel__label" for="mail">Adresse mail :</label>
+                <input class="panel__input" type="text" id="mail" name="mail" required/>
+                <label class="panel__label" for="password">Mot de passe :</label>
+                <input class="panel__input" type="password" id="password" name="password" required/>
+                <button type="submit" class="form__button">Envoyer</button>
+            </fieldset>
+        </form>
+        <?php endif; ?>
+    </div>
+</div>

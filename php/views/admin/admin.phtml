@@ -1,0 +1,37 @@
+<?php if($this -> isAdmin()) : ?>
+    <div class="container">
+        <h1>Panneau administrateur :</h1>
+        <ul class="button__list">
+            <li class="button__list__child--active" ><a href="index.php?action=admin">Gestion des utilisateurs</a></li>
+            <li class="button__list__child" ><a href="index.php?action=admincategorie">Gestion des catégories</a></li>
+            <li class="button__list__child" ><a href="index.php?action=admincontent">Gestion du contenu</a></li>
+            <li class="button__list__child" ><a href="index.php?action=admincomment">Gestion des commentaires</a></li>
+        </ul>
+        <div id="adminDisplay">
+            <h2> Gestion des utilisateurs :</h2>
+            <ul class="user__list">
+                <?php foreach($users as $user) : ?>
+                <li class="user__card">
+                    <?php if($user['avatar'] !== null) : ?>
+                    <img class="avatar" src="img/<?=$user['avatar']?>" alt="avatar"/>
+                    <?php endif; ?>
+                    <p><?=$user['pseudo']?></p>
+                    <a href="index.php?action=admindeleteuser&id=<?=$user['ID_user']?>">Supprimer</a>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php else : ?>
+    <div class="container">
+        <form action="index.php?action=logAdmin" method="POST">
+            <fieldset><Legend>Veuillez vous connecter.</Legend>
+                <label for="pseudo">Pseudo :</label>
+                <input type="text" id="pseudo" name="pseudo"/>
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password"/>
+                <button class="form__button">Connexion.</button>
+            </fieldset>
+        </form>
+    </div>
+<?php endif; ?>

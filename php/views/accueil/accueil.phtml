@@ -1,0 +1,70 @@
+<div class="mainpage">
+    <div class="container accueil__main">
+        <h1>Accueil ArtShare</h1>
+        <article id="mainPage" class="accueil__article">
+            <h2>Derniers ajouts :</h2>
+            <div class="article__display">
+            <?php foreach($images as $image) : ?>
+                <div class="article__card">
+                    <h3 class="article__title"><a href="index.php?action=image&id=<?=$image['ID_image']?>"><?=$image['title']?></a></h3>
+                    <p>
+                    <?php if($image['avatar'] != null) : ?>
+                    <img class="avatar__mini" src="img/<?=$image['avatar']?>" alt="avatar"/>
+                    <?php endif; ?>
+                    Posté par <a href="index.php?action=user&id=<?=$image['ID_user']?>"><?=$image['pseudo']?></a> dans <?=$image['categorieName']?></p>
+                    <p class="article__date"><?=$image['date']?></p>
+                    <a href="index.php?action=image&id=<?=$image['ID_image']?>"><img src="img/<?=$image['image']?>" alt="<?=$image['details']?>"/></a>
+                    <p><?=$image['text']?></p>
+                    <p><a href="index.php?action=star&id=<?=$image['ID_image']?>"><i class="fa-solid fa-star"></i></a><?=$image['number']?></p>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </article>
+        <?php if($this -> isConnect()) : ?>
+        <article class="accueil__article">
+            <h2>Dernières activités de vos utilisateurs suivis :</h2>
+            <div class="article__display">
+                <?php foreach($followers as $follow) : ?>
+                    <div class="article__card">
+                        <h3 class="article__title"><a href="index.php?action=image&id=<?=$follow['ID_image']?>"><?=$follow['title']?></a></h3>
+                        <?php if($follow['avatar'] != null) : ?>
+                        <img class="avatar__mini" src="img/<?=$follow['avatar']?>" alt="avatar"/>
+                        <?php endif; ?>
+                        <p>Posté par <a href="index.php?action=user&id=<?=$follow['ID_user']?>"><?=$follow['pseudo']?></a> dans <?=$follow['categorieName']?></p>
+                        <p class="article__date"><?=$follow['date']?></p>
+                        <img src="img/<?=$follow['image']?>" alt="<?=$follow['details']?>"/>
+                        <p><?=$follow['text']?></p>
+                        <p><a href="index.php?action=star&id=<?=$follow['ID_image']?>"><i class="fa-solid fa-star"></i><?=$follow['number']?></a></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </article>
+        <?php endif; ?>
+    </div>
+    <aside class="filtre">
+        <h2>Filtres :</h2>
+        <div>
+            <form class="filtre__search" action="index.php" method="POST">
+                <label class="search__label" for="search">Recherche :</label>
+                <input class="search__input" type="text" id="search"/>
+            </form>
+        </div>
+        <ul class="filtre__liste" id="categorieDisplayer">
+            <?php foreach($categories as $categorie) : ?>
+                <li class="filtre__liste__child" data-id=<?=$categorie['ID_categorie']?>><?=$categorie['categorieName']?></li>
+            <?php endforeach; ?>
+        </ul>
+    </aside>
+    <aside class="commentsdisplayer">
+        <h2>Derniers commentaires :</h2>
+        <ul id="lastcomments">
+            <?php foreach($lastcomment as $comment) : ?>
+                <li class="comments__content" data-bind="<?=$comment['ID_image']?>">
+                    <p>Posté par <a href="index.php?action=user&id=<?=$comment['ID_user']?>"><?=$comment['pseudo']?></a> le <?=$comment['date']?></p>
+                    <p>sur <a href="index.php?action=image&id=<?=$comment['ID_image']?>"><?=$comment['title']?></a> :</p>
+                    <p><?=$comment['comment']?></p>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </aside>
+</div>

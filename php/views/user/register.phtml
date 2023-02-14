@@ -1,0 +1,15 @@
+<div class="container">
+    <form action="index.php?action=register" method="POST">
+        <fieldset class="panel__fieldset"><legend>Formulaire d'inscription :</legend>
+            <label class="panel__label" for="pseudo">Pseudonyme :</label>
+            <input class="panel__input" type="text" id="pseudo" name="pseudo" required/>
+            <label class="panel__label" for="mail">Adresse mail :</label>
+            <input class="panel__input" type="email" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}" id="mail" name="mail" required/>
+            <label class="panel__label" for="password">Mot de passe :</label>
+            <input class="panel__input" type="password" id="password" name="password" required/>
+            <label class="panel__label" for="password">Confirmer le Mot de passe :</label>
+            <input class="panel__input" type="password" id="passwordconfirm" name="password" required/>
+            <button type="submit" id='validpassword' class='disabled'>Envoyer</button>
+        </fieldset>
+    </form>
+</div>

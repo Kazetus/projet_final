@@ -1,0 +1,35 @@
+<div class="container user__main">
+    <h1><?=$images[0]['pseudo']?></h1>
+    <div class="user__presentation">
+        <?php if($images[0]['avatar'] !== null) :?>
+            <img class="avatar" src="img/<?=$images[0]['avatar']?>" alt="avatar"/>
+        <?php endif; ?>
+        <?php if($countfollow !== false) : ?>
+            <p>Nombre de personnes qui me suivent : <?=$countfollow['number']?></p>
+        <?php else : ?>
+            <p>Nombre de personnes qui me suivent : 0</p>
+        <?php endif; ?>
+        <?php if($countstar !== false) : ?>
+            <p>Nombre d'<i class="fa-solid fa-star"></i> de mes images : <?=$countstar['number']?></p>
+        <?php else : ?>
+            <p>Nombre d'<i class="fa-solid fa-star"></i> de mes images : 0</p>
+        <?php endif; ?>
+        <?php if($images[0]['detailUtilisateur'] !== null && $images[0]['detailUtilisateur'] !== " ") : ?>
+            <p> A propos de moi : <?=$images[0]['detailUtilisateur']?></p>
+        <?php endif; ?>
+        <p><a href="index.php?action=suivre&id=<?=$images[0]['ID_user']?>">Suivez-moi !</a></p>
+    </div>
+    <div class="display__article">
+        <h2>Mes images téléversées :</h2>
+        <div class="article__container">
+            <?php foreach($images as $image) : ?>
+                <article class="article__card">
+                    <h3 class="article__title"><a href="index.php?action=image&id=<?=$image['ID_image']?>"><?=$image['title']?></a></h3>
+                    <p class="article__date">Posté le <?=$image['date']?> dans <?=$image['categorieName']?>. <a href="index.php?action=star&id=<?=$image['ID_image']?>"><?=$image['number']?><i class="fa-solid fa-star"></i></a>.</p>
+                    <img src="img/<?=$image['image']?>" alt="<?=$image['details']?>"/>
+                    <p><?=$image['text']?></p>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<nav class="panel__nav">
+    <p class="panel__button" data-action="editaccount">Gestion de compte</p>
+    <p class="panel__button" data-action="editcontent">Gestion de contenu</p>
+</nav>
+<?php if(isset($_GET['message'])) : ?>
+<p> <?=$_GET['message']?></p>
+<?php endif; ?>
+<div class="main__panel">
+    <h1>Panneau Utilisateur :</h1>
+    <div class="panel--flex">
+        <div class="panel__userinfo">
+            <h2><?=$user['pseudo']?></h2>
+            <?php if(isset($user['avatar']) && $user['avatar'] !== null) : ?>
+            <img class="avatar" src="img/<?=$user['avatar']?>" alt="avatar"/>
+            <?php endif; ?>
+            <!--//tester si null et afficher 0-->
+            <?php if($countfollow !== false) : ?>
+            <p>Nombre de personnes qui me suivent : <?=$countfollow['number']?></p>
+            <?php else : ?>
+            <p>Nombre de personnes qui me suivent: 0</p>
+            <?php endif; ?>
+            <?php if($countstar !== false) : ?>
+            <p>Nombre d'<i class="fa-solid fa-star"></i> de mes images : <?=$countstar['number']?></p>
+            <?php else : ?>
+            <p>Nombre d'<i class="fa-solid fa-star"></i> de mes images : 0</p>
+            <?php endif; ?>
+            <?php if($user['detailUtilisateur'] !== null) : ?>
+            <p> A propos de moi : <?=$user['detailUtilisateur']?></p>
+            <?php endif; ?>
+        </div>
+        <div class="container panel__display">
+            <div id="displayer__panel" class="display__article">
+                <h2>Mes images téléversées :</h2>
+                <div class="article__container">
+                    <?php foreach($images as $image) : ?>
+                        <article class="article__card">
+                            <h3 class="article__title"><a href="index.php?action=image&id=<?=$image['ID_image']?>"><?=$image['title']?></a></h3>
+                            <p class="article__date">Posté le <?=$image['date']?> dans <?=$image['categorieName']?>. <?=$image['number']?> <i class="fa-solid fa-star"></i>.</p>
+                            <img src="img/<?=$image['image']?>" alt="<?=$image['details']?>"/>
+                            <p><?=$image['text']?></p>
+                            <button class="panel__button delete" data-action="deleteimage" data-id="<?=$image['ID_image']?>">supprimer</button>
+                            <button class="panel__button modify" data-action="getimage" data-id="<?=$image['ID_image']?>">modifier</button>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div>
+                <form id="form" action="index.php?action=upload" method="POST" enctype="multipart/form-data">
+                    <fieldset id="formPanel" class="panel__fieldset"><legend>Poster une nouvelle image :</legend>
+                        
+                        <label class="panel__label" for="title">Titre :</label>
+                        <input class="panel__input" type="text" id="title" name="title" required/>
+                        <label class="panel__label" id="imagelabel" for="image">Image :</label>
+                        <input class="panel__input" type="file" id='image' name="image" accept="image/png, image/jpeg, image/gif" required/>
+                        <label class="panel__label" for="text">Description :</label>
+                        <input class="panel__input" type="text" id="text" name="text" required/>
+                        <label class="panel__label" for="details">Tag de l'image :</label>
+                        <input class="panel__input" type="text" id="details" name="details" required/>
+                        <label class="panel__label" for="categorie">Catégorie de l'image :</label>
+                        <select class="panel__input" id="categorie" name="categorie">
+                            <?php foreach($categorie as $categ) : ?>
+                            <option value="<?=$categ['ID_categorie']?>"><?=$categ['categorieName']?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit">Envoyer</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <aside class="panel__side">
+            <h2>Images marquées :</h2>
+            <ul class="side__list">
+                <?php foreach($stared as $star) : ?>
+                    <li><a href="index.php?action=image&id=<?=$star['ID_image']?>"><?=$star['title']?></a></li>
+                <?php endforeach; ?>
+            </ul>
+            <h2>Utilisateurs suivis :</h2>
+            <ul class="side__list">
+                <?php foreach($followed as $follow) : ?>
+                    <li><a href="index.php?action=user&id=<?=$follow['ID_usersuivi']?>"><?=$follow['pseudo']?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </aside>
+    </div>
+</div>
